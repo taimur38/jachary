@@ -27,16 +27,21 @@ class ofApp : public ofBaseApp{
 
 		ofShader shaderProg;
 		ofVboMesh dat_mesh;
+		ofImage dat_tex;
 
 		// controlled vars
 
+		int count = 20000;
 		int activeColorIndex = 0;
+		int activeMeshIndex = 0;
 		float yScaleMod = 1.6;
 		float xScaleMod = 1.2;
 		float zScaleMod = 1.0;
 		float speedMod = 100.0;
 		float radius = 30;
 		int perturbation = 1;
+		int xSpacing = 4;
+		int ySpacing = 3;
 
 		//end controlled vars
 
@@ -45,6 +50,8 @@ class ofApp : public ofBaseApp{
 		ofCylinderPrimitive cp;
 		ofConePrimitive coneP;
 
+		vector<ofMesh> meshes;
+
 		ofCamera cam;
 		ofLight light;
 		vector<ofVec3f> gridpoints;
@@ -52,22 +59,8 @@ class ofApp : public ofBaseApp{
 		
 #define num_colors 10
 
-		ofFloatColor colors[num_colors] = {
-			ofFloatColor(216.0/255.0, 126.0/255.0, 66.0/255.0),		// orange
-			ofFloatColor(25.0/255.0, 41.0/255.0, 61.0/255.0),		// navy blue
-			ofFloatColor(236.0/255.0, 92.0/255.0, 68.0/255.0),		// red
-			ofFloatColor(70.0/255.0, 134.0/255.0, 198.0/255.0),		// light blue
-			ofFloatColor(217.0/255.0, 228.0/255.0, 170.0/255.0),	// light yellow
-			ofFloatColor(237.0/255.0, 247.0/255.0, 86.0/255.0),		// yellow
-			ofFloatColor(254.0/255.0, 166.0/255.0, 214.0/255.0),	// pink
-			ofFloatColor(160.0/255.0, 203.0/255.0, 210.0/255.0),	// soft blue
-			ofFloatColor(162.0/255.0, 215.0/255.0, 189.0/255.0),	// soft green
-			ofFloatColor(247.0/255.0, 197.0/255.0, 200.0/255.0)		// soft pink
-		};
-
 		ofVec4f colorsVec[num_colors] = {
 			ofVec4f(216.0/255.0, 126.0/255.0, 66.0/255.0, 1.0),		// orange
-			ofVec4f(25.0/255.0, 41.0/255.0, 61.0/255.0, 1.0),		// navy blue
 			ofVec4f(236.0/255.0, 92.0/255.0, 68.0/255.0, 1.0),		// red
 			ofVec4f(70.0/255.0, 134.0/255.0, 198.0/255.0, 1.0),		// light blue
 			ofVec4f(217.0/255.0, 228.0/255.0, 170.0/255.0, 1.0),	// light yellow
@@ -75,7 +68,8 @@ class ofApp : public ofBaseApp{
 			ofVec4f(254.0/255.0, 166.0/255.0, 214.0/255.0, 1.0),	// pink
 			ofVec4f(160.0/255.0, 203.0/255.0, 210.0/255.0, 1.0),	// soft blue
 			ofVec4f(162.0/255.0, 215.0/255.0, 189.0/255.0, 1.0),	// soft green
-			ofVec4f(247.0/255.0, 197.0/255.0, 200.0/255.0, 1.0)		// soft pink
+			ofVec4f(247.0/255.0, 197.0/255.0, 200.0/255.0, 1.0),	// soft pink
+			//ofVec4f(25.0/255.0, 41.0/255.0, 61.0/255.0, 1.0),		// navy blue
 		};
 
 		/*
