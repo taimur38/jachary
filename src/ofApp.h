@@ -36,6 +36,7 @@ class ofApp : public ofBaseApp{
 		float zScaleMod = 1.0;
 		float speedMod = 100.0;
 		float radius = 30;
+		int perturbation = 1;
 
 		//end controlled vars
 
@@ -62,6 +63,19 @@ class ofApp : public ofBaseApp{
 			ofFloatColor(160.0/255.0, 203.0/255.0, 210.0/255.0),	// soft blue
 			ofFloatColor(162.0/255.0, 215.0/255.0, 189.0/255.0),	// soft green
 			ofFloatColor(247.0/255.0, 197.0/255.0, 200.0/255.0)		// soft pink
+		};
+
+		ofVec4f colorsVec[num_colors] = {
+			ofVec4f(216.0/255.0, 126.0/255.0, 66.0/255.0, 1.0),		// orange
+			ofVec4f(25.0/255.0, 41.0/255.0, 61.0/255.0, 1.0),		// navy blue
+			ofVec4f(236.0/255.0, 92.0/255.0, 68.0/255.0, 1.0),		// red
+			ofVec4f(70.0/255.0, 134.0/255.0, 198.0/255.0, 1.0),		// light blue
+			ofVec4f(217.0/255.0, 228.0/255.0, 170.0/255.0, 1.0),	// light yellow
+			ofVec4f(237.0/255.0, 247.0/255.0, 86.0/255.0, 1.0),		// yellow
+			ofVec4f(254.0/255.0, 166.0/255.0, 214.0/255.0, 1.0),	// pink
+			ofVec4f(160.0/255.0, 203.0/255.0, 210.0/255.0, 1.0),	// soft blue
+			ofVec4f(162.0/255.0, 215.0/255.0, 189.0/255.0, 1.0),	// soft green
+			ofVec4f(247.0/255.0, 197.0/255.0, 200.0/255.0, 1.0)		// soft pink
 		};
 
 		/*

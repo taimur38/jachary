@@ -7,6 +7,11 @@ uniform vec4 globalColor = vec4(1.0);
 uniform sampler2D tex0;
 uniform float timeValue=0.0;
 
+uniform vec4 color1;
+uniform vec4 color2;
+uniform int ticks;
+uniform int perturbation;
+
 uniform int count;
 
 in vec4 position;
@@ -26,7 +31,10 @@ void main()
 	int heightCount = 1080 / ( 3 * init_radius);
 
 	int id = (gl_InstanceID % count); 
-	int instanceX = (id % widthCount) * 4 * init_radius - 1920/2 + init_radius;
+
+	int offset = id % perturbation;
+
+	int instanceX = (id % widthCount) * 4 * init_radius - 1920/2 + init_radius + int(offset * sin(ticks));
 	int instanceY = (int(id / widthCount) * 3 * init_radius) % 1080 - 1080/2;
 	int instanceZ = int(float(id) / (widthCount * heightCount)) * 2*init_radius;
 
@@ -35,7 +43,9 @@ void main()
 	newPos.y = position.y + instanceY;
 	newPos.z = position.z + instanceZ;
 
-	colorVarying = vec4(float(id) / count, 1-float(id)/float(count), 1.0, 1.0);
+	//colorVarying = vec4(float(id) / count, 1-float(id)/float(count), 1.0, 1.0);
+
+	colorVarying = vec4(mix(color1, color2, float(id)/float(count)));
 
 	gl_Position = projectionMatrix * modelViewMatrix * newPos;
 

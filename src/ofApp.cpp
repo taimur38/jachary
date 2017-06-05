@@ -35,18 +35,22 @@ void ofApp::update() {
 	modded_ticks = (modded_ticks + 1.0 / speedMod);
 	ticks++;
 
-	if (ticks % 400 == 0) {
+	if (ticks % 4000 == 0) {
 		dat_mesh = coneP.getMesh();
 	}
-	else if (ticks % 300 == 0) {
+	else if (ticks % 3000 == 0) {
 		dat_mesh = cp.getMesh();
 	}
-	else if (ticks % 200 == 0) {
+	else if (ticks % 2000 == 0) {
 		dat_mesh = sp.getMesh();
 	}
-	else if (ticks % 100 == 0) {
+	else if (ticks % 1000 == 0) {
 		dat_mesh = bp.getMesh();
 	}
+
+	if (ticks % 500 == 0)
+		activeColorIndex++;
+
 
 	cam.setPosition(ofVec3f(
 		sin(modded_ticks * xScaleMod) * (1080/4),
@@ -79,6 +83,10 @@ void ofApp::draw() {
 	glCullFace(GL_BACK);
 
 	shaderProg.setUniform1i("count", count);
+	shaderProg.setUniform4f("color1", colorsVec[activeColorIndex % num_colors]);
+	shaderProg.setUniform4f("color2", colorsVec[(activeColorIndex+1) % num_colors]);
+	shaderProg.setUniform1i("ticks", ticks);
+	shaderProg.setUniform1i("perturbation", perturbation);
 
 	//dat_mesh.drawInstanced(OF_MESH_FILL, (1080 / (3 * init_radius)) * (1920 / (4 * init_radius)));
 	dat_mesh.drawInstanced(OF_MESH_FILL, count);
