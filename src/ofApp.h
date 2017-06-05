@@ -37,7 +37,7 @@ class ofApp : public ofBaseApp{
 		float yScaleMod = 1.6;
 		float xScaleMod = 1.2;
 		float zScaleMod = 1.0;
-		float speedMod = 100.0;
+		float speedMod = 300.0;
 		float radius = 30;
 		int perturbation = 1;
 		int xSpacing = 4;
