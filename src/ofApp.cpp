@@ -90,6 +90,9 @@ void ofApp::draw() {
 	shaderProg.setUniformTexture("tex0", dat_tex.getTexture(), 0);
 	shaderProg.setUniform1i("xSpacing", xSpacing);
 	shaderProg.setUniform1i("ySpacing", ySpacing);
+	shaderProg.setUniform1i("boomTick", boomTick);
+	shaderProg.setUniform1i("boomDuration", boomDuration);
+	shaderProg.setUniform1i("boomStrength", boomStrength);
 
 	dat_mesh.drawInstanced(OF_MESH_FILL, count);
 
@@ -113,6 +116,12 @@ void ofApp::keyPressed(int key){
 
 	const int SPACE = 32;
 	const int Z = 122;
+
+	const int ENTER = 13;
+
+	if (key == ENTER) {
+		boomTick = ticks;
+	}
 
 	if (key == SPACE) {
 		activeColorIndex++;

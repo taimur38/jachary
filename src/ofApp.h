@@ -31,6 +31,10 @@ class ofApp : public ofBaseApp{
 
 		// controlled vars
 
+		int boomTick = 0;
+		int boomDuration = 50;
+		int boomStrength = 20;
+
 		int count = 20000;
 		int activeColorIndex = 0;
 		int activeMeshIndex = 0;
