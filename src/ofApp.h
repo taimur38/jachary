@@ -46,6 +46,9 @@ class ofApp : public ofBaseApp{
 		int perturbation = 1;
 		int xSpacing = 4;
 		int ySpacing = 3;
+    
+        float waveTime = 0;
+        int waveDuration = 120;
 
 		//end controlled vars
 

@@ -93,6 +93,9 @@ void ofApp::draw() {
 	shaderProg.setUniform1i("boomTick", boomTick);
 	shaderProg.setUniform1i("boomDuration", boomDuration);
 	shaderProg.setUniform1i("boomStrength", boomStrength);
+    shaderProg.setUniform1f("timeValue", ofGetElapsedTimef());
+    shaderProg.setUniform1f("waveTime", waveTime);
+    shaderProg.setUniform1i("waveDuration", waveDuration);
 
 	dat_mesh.drawInstanced(OF_MESH_FILL, count);
 
@@ -116,12 +119,17 @@ void ofApp::keyPressed(int key){
 
 	const int SPACE = 32;
 	const int Z = 122;
+    const int W = 119;
 
 	const int ENTER = 13;
 
 	if (key == ENTER) {
 		boomTick = ticks;
 	}
+    
+    if (key == W) {
+        waveTime = ticks;
+    }
 
 	if (key == SPACE) {
 		activeColorIndex++;

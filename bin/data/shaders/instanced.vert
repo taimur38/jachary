@@ -5,7 +5,9 @@ uniform mat4 modelViewMatrix;
 uniform mat4 modelViewProjectionMatrix;
 uniform vec4 globalColor = vec4(1.0);
 uniform sampler2D tex0;
-uniform float timeValue=0.0;
+uniform float timeValue;
+uniform float waveTime;
+uniform int waveDuration;
 
 uniform vec4 color1;
 uniform vec4 color2;
@@ -56,6 +58,13 @@ void main()
 	newPos.x = position.x + instanceX;
 	newPos.y = position.y + instanceY;
 	newPos.z = position.z + instanceZ;
+    
+    float perc_z = float(instanceZ) / float(maxZ);
+    float ticks_so_far = ticks - waveTime;
+    float ticks_since_start = (ticks_so_far - float(perc_z * float(waveDuration))) / 5;
+    if(ticks_since_start > 0 && ticks_since_start < 3.14)
+        newPos.x += sin(ticks_since_start) * 300;
+    //newPos.x += sin(instanceZ / 100.0 + (timeValue - waveTime) * 2) * 100;
 
 	float boomPropagation = 100;
 
