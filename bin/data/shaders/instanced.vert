@@ -52,7 +52,7 @@ void main()
 	int maxZ = int(float(count) / (widthCount * heightCount)) * 2*init_radius;
 
 	vec4 cornerPt = vec4(maxX, maxY, maxZ, 0.0);
-	vec4 center = vec4(0, 0, maxZ/2.0, 0.0);
+	vec4 center = vec4(0, maxY/2.0, maxZ/2.0, 0.0);
 
 	vec4 newPos = position;
 	newPos.x = position.x + instanceX;
@@ -65,17 +65,42 @@ void main()
     if(ticks_since_start > 0 && ticks_since_start < 3.14)
         newPos.x += sin(ticks_since_start) * 300;
     //newPos.x += sin(instanceZ / 100.0 + (timeValue - waveTime) * 2) * 100;
+    
+    
+    
+//    float distFromCenter = sqrt(pow(instanceX - center.x, 2) + pow(instanceY - center.y, 2) + pow(instanceZ - center.z, 2));
+//    float maxdistFromCenter = sqrt(pow(maxX - center.x, 2) + pow(maxY - center.y, 2) + pow(maxZ - center.z, 2));
+//    ticks_so_far = ticks - boomTick;
+//    ticks_since_start = (ticks_so_far - float(distFromCenter/float(maxdistFromCenter) * float(boomDuration))) / 10;
+//    if(ticks_since_start > 0 && ticks_since_start < 3.14 * 2) {
+//        newPos.x += sin(instanceX - center.x + ticks_since_start) * 300;
+//        newPos.y += sin(instanceY - center.y + ticks_since_start) * 300;
+//        newPos.z += sin(instanceZ - center.z + ticks_since_start) * 300;
+//    }
+    
+    float distFromCenter = sqrt(pow(instanceX - center.x, 2) + pow(instanceY - center.y, 2) + pow(instanceZ - center.z, 2));
+    float maxdistFromCenter = sqrt(pow(maxX - center.x, 2) + pow(maxY - center.y, 2) + pow(maxZ - center.z, 2));
+    ticks_so_far = ticks - boomTick;
+    ticks_since_start = (ticks_so_far / float(boomDuration)) * 10;
+    if(ticks_since_start > 0 && ticks_since_start < 3.14) {
+//        newPos.x += sin(sign(instanceX - center.x) * ticks_since_start) * pow(300 / (distFromCenter / maxdistFromCenter), 1.1);
+//        newPos.y += sin(sign(instanceY - center.y) * ticks_since_start) * pow(500 / (distFromCenter / maxdistFromCenter), 1.1);
+//        newPos.z += sin(sign(instanceZ - center.z) * ticks_since_start) * pow(300 / (distFromCenter / maxdistFromCenter), 1.1);
+        newPos.x += sign(newPos.x) * sin(ticks_since_start) * boomStrength * 20;
+        newPos.y += sign(newPos.y) * sin(ticks_since_start) * boomStrength * 20;
+        newPos.z += sign(newPos.z) * sin(ticks_since_start) * boomStrength * 20;
+    }
 
-	float boomPropagation = 100;
-
-
-	float boomTravel = boomPropagation * (ticks - boomTick);
-
-	if(boomTravel > .8 * length(newPos - center) && boomTravel < 1.5 * length(newPos - center)) {
-			newPos.x += sign(newPos.x) * boomStrength;
-			newPos.y += sign(newPos.y) * boomStrength;
-			newPos.z += sign(newPos.z) * boomStrength;
-	}
+//	float boomPropagation = 100;
+//
+//
+//	float boomTravel = boomPropagation * (ticks - boomTick);
+//
+//	if(boomTravel > .8 * length(newPos - center) && boomTravel < 1.5 * length(newPos - center)) {
+//			newPos.x += sign(newPos.x) * boomStrength;
+//			newPos.y += sign(newPos.y) * boomStrength;
+//			newPos.z += sign(newPos.z) * boomStrength;
+//	}
 	// assume boomLocation is (0,0,maxZ/2)
 	if(ticks < boomTick + boomDuration && ticks > boomTick) {
 		
