@@ -4,7 +4,7 @@ uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
 uniform mat4 modelViewProjectionMatrix;
 uniform vec4 globalColor = vec4(1.0);
-uniform sampler2D tex0;
+uniform sampler2DRect tex0;
 uniform float timeValue;
 uniform float waveTime;
 uniform int waveDuration;
@@ -62,7 +62,7 @@ void main()
     float perc_z = float(instanceZ) / float(maxZ);
     float ticks_so_far = ticks - waveTime;
     float ticks_since_start = (ticks_so_far - float(perc_z * float(waveDuration))) / 5;
-    if(ticks_since_start > 0 && ticks_since_start < 3.14)
+    if(ticks_since_start > 0 && ticks_since_start < 3.14 && waveTime > 0)
         newPos.x += sin(ticks_since_start) * 300;
     //newPos.x += sin(instanceZ / 100.0 + (timeValue - waveTime) * 2) * 100;
     
@@ -72,7 +72,7 @@ void main()
     float maxdistFromCenter = sqrt(pow(maxX - center.x, 2) + pow(maxY - center.y, 2) + pow(maxZ - center.z, 2));
     ticks_so_far = ticks - boomTick;
     ticks_since_start = (ticks_so_far - float(distFromCenter/float(maxdistFromCenter) * float(boomDuration))) / 20;
-    if(ticks_since_start > 0 && ticks_since_start < 3.14 * 2) {
+    if(boomTick > 0 && ticks_since_start > 0 && ticks_since_start < 3.14 * 2) {
         newPos.x += sin(instanceX - center.x + ticks_since_start) * 50;
         newPos.y += sin(instanceY - center.y + ticks_since_start) * 50;
         newPos.z += sin(instanceZ - center.z + ticks_since_start) * 50;

@@ -6,7 +6,7 @@ void ofApp::setup() {
 	// create grid
 
 	//ofSetWindowShape(1920 * 4, 1080);
-	ofSetFullscreen(true);
+	//ofSetFullscreen(true);
 	ofBackground(0);
 	light.setDiffuseColor(ofFloatColor(0.85, 0.85, 0.85));
 	ofEnableDepthTest();
@@ -19,10 +19,10 @@ void ofApp::setup() {
 
 	sp.setRadius(init_radius);
 	bp.set(init_radius);
-	cp.set(float(init_radius) / 3.0, float(init_radius));
-	coneP.set(init_radius, float(init_radius) / 3.0);
+	cp.set(float(init_radius), float(init_radius));
+	coneP.set(init_radius, float(init_radius));
 
-	meshes.push_back(sp.getMesh());
+	//meshes.push_back(sp.getMesh());
 	meshes.push_back(bp.getMesh());
 	meshes.push_back(cp.getMesh());
 	meshes.push_back(coneP.getMesh());

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ofMain.h"
-//#include "ofxLibwebsockets.h"
 
 class ofApp : public ofBaseApp{
 
@@ -32,7 +31,7 @@ class ofApp : public ofBaseApp{
 
 		// controlled vars
 
-		int boomTick = 0;
+		int boomTick = -1;
 		int boomDuration = 100;
 		int boomStrength = 20;
 
@@ -48,7 +47,7 @@ class ofApp : public ofBaseApp{
 		int xSpacing = 4;
 		int ySpacing = 3;
     
-        float waveTime = 0;
+        float waveTime = -1;
         int waveDuration = 150;
 
 		//end controlled vars
