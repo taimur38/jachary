@@ -1,6 +1,12 @@
 #pragma once
 
 #include "ofMain.h"
+#include "server_ws.hpp"
+#include "client_ws.hpp"
+
+
+typedef SimpleWeb::SocketServer<SimpleWeb::WS> WsServer;
+typedef SimpleWeb::SocketClient<SimpleWeb::WS> WsClient;
 
 class ofApp : public ofBaseApp{
 
@@ -28,6 +34,9 @@ class ofApp : public ofBaseApp{
 		ofShader shaderProg;
 		ofVboMesh dat_mesh;
         vector<ofImage> dat_texes;
+
+		thread client_thread;
+		WsClient* client;
 
 		// controlled vars
 

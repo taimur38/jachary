@@ -45,6 +45,48 @@ void ofApp::setup() {
     
     light.setPointLight();
 
+
+	client = new WsClient("localhost:1337");
+
+	client->on_message = [this](shared_ptr<WsClient::Message> message) {
+		auto message_str = message->string();
+
+		boomTick = ticks;
+
+		ofLog(OF_LOG_VERBOSE, "" + message_str);
+
+	};
+
+	client->on_open = [this]() {
+		ofLog(OF_LOG_VERBOSE, "connected");
+		/*
+		cout << "Client: Opened connection" << endl;
+
+		string message = "Hello";
+		cout << "Client: Sending message: \"" << message << "\"" << endl;
+
+		auto send_stream = make_shared<WsClient::SendStream>();
+		*send_stream << message;
+		client->send(send_stream);
+		*/
+	};
+
+	client->on_close = [](int status, const string& reason) {
+		ofLog(OF_LOG_VERBOSE, "closed conn %d", status);
+	};
+
+	//See http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio/reference.html, Error Codes for error code meanings
+	client->on_error = [](const boost::system::error_code& ec) {
+		//cout << "Client: Error: " << ec << ", error message: " << ec.message() << endl;
+		ofLog(OF_LOG_VERBOSE, "client error");
+	};
+
+	client_thread = thread([this]() {
+		client->start();
+	});
+
+	client_thread.detach();
+
 }
 
 //--------------------------------------------------------------
