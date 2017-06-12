@@ -49,11 +49,43 @@ void ofApp::setup() {
 	client = new WsClient("localhost:1337");
 
 	client->on_message = [this](shared_ptr<WsClient::Message> message) {
-		auto message_str = message->string();
+		auto payload = message->string();
 
-		boomTick = ticks;
+		ofLog(OF_LOG_VERBOSE, "" + payload);
 
-		ofLog(OF_LOG_VERBOSE, "" + message_str);
+		if (payload.compare("1") == 0) {
+			activeColorIndex = 1;
+		}
+		else if (payload.compare("2") == 0) {
+			activeColorIndex = 2;
+		}
+		else if (payload.compare("3") == 0) {
+			activeColorIndex = 3;
+		}
+		else if (payload.compare("4") == 0) {
+			activeColorIndex = 4;
+		}
+		else if (payload.compare("5") == 0) {
+			activeColorIndex = 5;
+		}
+		else if (payload.compare("6") == 0) {
+			activeColorIndex = 6;
+		}
+		else if (payload.compare("Boom") == 0) {
+			boomTick = ticks;
+		}
+		else if (payload.compare("Wave") == 0) {
+			waveTime = ticks;
+		}
+		else if (payload.compare("Cube") == 0) {
+			dat_mesh = bp.getMesh();
+		}
+		else if (payload.compare("Cylinder") == 0) {
+			dat_mesh = cp.getMesh();
+		}
+		else if (payload.compare("Cone") == 0) {
+			dat_mesh = coneP.getMesh();
+		}
 
 	};
 
@@ -95,13 +127,16 @@ void ofApp::update() {
 	modded_ticks = (modded_ticks + 1.0 / speedMod);
 	ticks++;
 
+	/*
 	if (ticks % 1000 == 0) {
 		activeMeshIndex = (activeMeshIndex + 1) % meshes.size();
 	}
+	*/
 
+	/*
 	if (ticks % 500 == 0)
 		activeColorIndex++;
-
+	*/
 
 	cam.setPosition(ofVec3f(
 		sin(modded_ticks * xScaleMod) * (1080/4),
@@ -109,7 +144,7 @@ void ofApp::update() {
 		(sin(modded_ticks * zScaleMod) + 1)/2 * 1500 + 300 
 	));
 
-	dat_mesh = meshes.at(activeMeshIndex % meshes.size());
+	/*dat_mesh = meshes.at(activeMeshIndex % meshes.size());*/
 
 	cam.lookAt(ofVec3f(
 		sin(modded_ticks),
