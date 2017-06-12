@@ -68,28 +68,28 @@ void main()
     
     
     
-//    float distFromCenter = sqrt(pow(instanceX - center.x, 2) + pow(instanceY - center.y, 2) + pow(instanceZ - center.z, 2));
-//    float maxdistFromCenter = sqrt(pow(maxX - center.x, 2) + pow(maxY - center.y, 2) + pow(maxZ - center.z, 2));
-//    ticks_so_far = ticks - boomTick;
-//    ticks_since_start = (ticks_so_far - float(distFromCenter/float(maxdistFromCenter) * float(boomDuration))) / 10;
-//    if(ticks_since_start > 0 && ticks_since_start < 3.14 * 2) {
-//        newPos.x += sin(instanceX - center.x + ticks_since_start) * 300;
-//        newPos.y += sin(instanceY - center.y + ticks_since_start) * 300;
-//        newPos.z += sin(instanceZ - center.z + ticks_since_start) * 300;
-//    }
-    
     float distFromCenter = sqrt(pow(instanceX - center.x, 2) + pow(instanceY - center.y, 2) + pow(instanceZ - center.z, 2));
     float maxdistFromCenter = sqrt(pow(maxX - center.x, 2) + pow(maxY - center.y, 2) + pow(maxZ - center.z, 2));
     ticks_so_far = ticks - boomTick;
-    ticks_since_start = (ticks_so_far / float(boomDuration)) * 10;
-    if(ticks_since_start > 0 && ticks_since_start < 3.14) {
-//        newPos.x += sin(sign(instanceX - center.x) * ticks_since_start) * pow(300 / (distFromCenter / maxdistFromCenter), 1.1);
-//        newPos.y += sin(sign(instanceY - center.y) * ticks_since_start) * pow(500 / (distFromCenter / maxdistFromCenter), 1.1);
-//        newPos.z += sin(sign(instanceZ - center.z) * ticks_since_start) * pow(300 / (distFromCenter / maxdistFromCenter), 1.1);
-        newPos.x += sign(newPos.x) * sin(ticks_since_start) * boomStrength * 20;
-        newPos.y += sign(newPos.y) * sin(ticks_since_start) * boomStrength * 20;
-        newPos.z += sign(newPos.z) * sin(ticks_since_start) * boomStrength * 20;
+    ticks_since_start = (ticks_so_far - float(distFromCenter/float(maxdistFromCenter) * float(boomDuration))) / 20;
+    if(ticks_since_start > 0 && ticks_since_start < 3.14 * 2) {
+        newPos.x += sin(instanceX - center.x + ticks_since_start) * 50;
+        newPos.y += sin(instanceY - center.y + ticks_since_start) * 50;
+        newPos.z += sin(instanceZ - center.z + ticks_since_start) * 50;
     }
+    
+//    float distFromCenter = sqrt(pow(instanceX - center.x, 2) + pow(instanceY - center.y, 2) + pow(instanceZ - center.z, 2));
+//    float maxdistFromCenter = sqrt(pow(maxX - center.x, 2) + pow(maxY - center.y, 2) + pow(maxZ - center.z, 2));
+//    ticks_so_far = ticks - boomTick;
+//    ticks_since_start = (ticks_so_far / float(boomDuration)) * 10;
+//    if(ticks_since_start > 0 && ticks_since_start < 3.14) {
+////        newPos.x += sin(sign(instanceX - center.x) * ticks_since_start) * pow(300 / (distFromCenter / maxdistFromCenter), 1.1);
+////        newPos.y += sin(sign(instanceY - center.y) * ticks_since_start) * pow(500 / (distFromCenter / maxdistFromCenter), 1.1);
+////        newPos.z += sin(sign(instanceZ - center.z) * ticks_since_start) * pow(300 / (distFromCenter / maxdistFromCenter), 1.1);
+//        newPos.x += sign(newPos.x) * sin(ticks_since_start) * boomStrength * 20;
+//        newPos.y += sign(newPos.y) * sin(ticks_since_start) * boomStrength * 20;
+//        newPos.z += sign(newPos.z) * sin(ticks_since_start) * boomStrength * 20;
+//    }
 
 //	float boomPropagation = 100;
 //
@@ -102,30 +102,30 @@ void main()
 //			newPos.z += sign(newPos.z) * boomStrength;
 //	}
 	// assume boomLocation is (0,0,maxZ/2)
-	if(ticks < boomTick + boomDuration && ticks > boomTick) {
-		
-		/*
-		float boomSpan = float(boomDuration)/float(ticks - boomTick);
-
-		float boomDistance = length(newPos - center);
-		float maxDistance = length(cornerPt - center);
-
-		float normD = boomDistance / maxDistance;
-
-		if( .8 * boomSpan > normD && 1.4 * boomSpan < normD) {
-			newPos.x += sign(newPos.x) * boomStrength;
-			newPos.y += sign(newPos.y) * boomStrength;
-			newPos.z += sign(newPos.z) * boomStrength;
-		}
-		*/
-
-	}
+//	if(ticks < boomTick + boomDuration && ticks > boomTick) {
+//		
+//		
+//		float boomSpan = float(boomDuration)/float(ticks - boomTick);
+//
+//		float boomDistance = length(newPos - center);
+//		float maxDistance = length(cornerPt - center);
+//
+//		float normD = boomDistance / maxDistance;
+//
+//		if( .8 * boomSpan > normD && 1.4 * boomSpan < normD) {
+//			newPos.x += sign(newPos.x) * boomStrength;
+//			newPos.y += sign(newPos.y) * boomStrength;
+//			newPos.z += sign(newPos.z) * boomStrength;
+//		}
+//		
+//
+//	}
 
 
 	//colorVarying = vec4(float(id) / count, 1-float(id)/float(count), 1.0, 1.0);
 
 	colorVarying = vec4(mix(color1, color2, float(id)/float(count)));
-	texCoordVarying = vec2(position.x, position.y);
+    texCoordVarying = vec2((newPos.x / 3 + maxX) / float(maxX) / 2 , (maxZ - newPos.z) / maxZ);
 
 	gl_Position = projectionMatrix * modelViewMatrix * newPos;
 

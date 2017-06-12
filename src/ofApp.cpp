@@ -13,7 +13,7 @@ void ofApp::setup() {
 	ofEnableLighting();
 	ofSetSphereResolution(48);
 	ofSetSmoothLighting(true);
-	ofDisableAlphaBlending();
+	//ofDisableAlphaBlending();
 
 	ofSetLogLevel(OF_LOG_VERBOSE);
 
@@ -29,11 +29,21 @@ void ofApp::setup() {
 
 	dat_mesh = sp.getMesh();
 	
-	dat_tex.load("jachary_blue.jpg");
+	dat_texes.push_back(*new ofImage());
+    dat_texes.push_back(*new ofImage());
+    dat_texes.push_back(*new ofImage());
+    
+    dat_texes[0].load("jachary_blue.jpg");
+    dat_texes[1].load("jachary_purple.jpg");
+    dat_texes[2].load("jachary_red.jpg");
 
 	shaderProg.load("shaders/instanced.vert", "shaders/instanced.frag");
 	cam.setupPerspective(false, 60, 0, 10000);
 	cam.setPosition(ofVec3f(0, 1920 / 4, 300));
+    
+    light.setDiffuseColor(ofColor(0.0, 255.0, 0.0));
+    
+    light.setPointLight();
 
 }
 
@@ -77,17 +87,19 @@ void ofApp::draw() {
 	ofSetColor(ofColor::white);
 	cam.begin();
 	light.enable();
+    //dat_tex.getTexture().bind();
 	shaderProg.begin();
 
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
+    glEnable(GL_TEXTURE_2D);
 
 	shaderProg.setUniform1i("count", count);
 	shaderProg.setUniform4f("color1", colorsVec[activeColorIndex % num_colors]);
 	shaderProg.setUniform4f("color2", colorsVec[(activeColorIndex+1) % num_colors]);
 	shaderProg.setUniform1i("ticks", ticks);
 	shaderProg.setUniform1i("perturbation", perturbation);
-	shaderProg.setUniformTexture("tex0", dat_tex.getTexture(), 0);
+	shaderProg.setUniformTexture("tex0", dat_texes[activeColorIndex % 3].getTexture(), 0);
 	shaderProg.setUniform1i("xSpacing", xSpacing);
 	shaderProg.setUniform1i("ySpacing", ySpacing);
 	shaderProg.setUniform1i("boomTick", boomTick);
@@ -97,12 +109,16 @@ void ofApp::draw() {
     shaderProg.setUniform1f("waveTime", waveTime);
     shaderProg.setUniform1i("waveDuration", waveDuration);
 
+
 	dat_mesh.drawInstanced(OF_MESH_FILL, count);
 
 	glDisable(GL_CULL_FACE);
+    glDisable(GL_TEXTURE_2D);
 
 	shaderProg.end();
+    //dat_tex.getTexture().unbind();
 	light.disable();
+    //dat_tex.getTexture().draw(0, 0, 0);
 	cam.end();
 
 }

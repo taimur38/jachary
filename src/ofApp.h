@@ -28,12 +28,12 @@ class ofApp : public ofBaseApp{
 
 		ofShader shaderProg;
 		ofVboMesh dat_mesh;
-		ofImage dat_tex;
+        vector<ofImage> dat_texes;
 
 		// controlled vars
 
 		int boomTick = 0;
-		int boomDuration = 200;
+		int boomDuration = 100;
 		int boomStrength = 20;
 
 		int count = 20000;
