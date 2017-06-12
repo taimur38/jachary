@@ -136,6 +136,7 @@ void ofApp::keyPressed(int key){
 	const int SPACE = 32;
 	const int Z = 122;
     const int W = 119;
+    const int R = 114;
 
 	const int ENTER = 13;
 
@@ -154,6 +155,11 @@ void ofApp::keyPressed(int key){
 	if (key == Z) {
 		activeMeshIndex++;
 	}
+    
+    if (key == R) {
+        ySpacing = -27;
+        xSpacing = 1;
+    }
 
 
 	if (key >= 356 && key <= 359) {

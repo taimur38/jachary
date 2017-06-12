@@ -31,6 +31,10 @@ in vec3 normal;
 out vec4 colorVarying;
 out vec2 texCoordVarying;
 
+float rand(vec2 co){
+    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
+
 void main()
 {
 
@@ -61,7 +65,7 @@ void main()
     
     float perc_z = float(instanceZ) / float(maxZ);
     float ticks_so_far = ticks - waveTime;
-    float ticks_since_start = (ticks_so_far - float(perc_z * float(waveDuration))) / 5;
+    float ticks_since_start = (ticks_so_far - float(perc_z * float(waveDuration))) / 20;
     if(ticks_since_start > 0 && ticks_since_start < 3.14 && waveTime > 0)
         newPos.x += sin(ticks_since_start) * 300;
     //newPos.x += sin(instanceZ / 100.0 + (timeValue - waveTime) * 2) * 100;
@@ -77,19 +81,6 @@ void main()
         newPos.y += sin(instanceY - center.y + ticks_since_start) * 50;
         newPos.z += sin(instanceZ - center.z + ticks_since_start) * 50;
     }
-    
-//    float distFromCenter = sqrt(pow(instanceX - center.x, 2) + pow(instanceY - center.y, 2) + pow(instanceZ - center.z, 2));
-//    float maxdistFromCenter = sqrt(pow(maxX - center.x, 2) + pow(maxY - center.y, 2) + pow(maxZ - center.z, 2));
-//    ticks_so_far = ticks - boomTick;
-//    ticks_since_start = (ticks_so_far / float(boomDuration)) * 10;
-//    if(ticks_since_start > 0 && ticks_since_start < 3.14) {
-////        newPos.x += sin(sign(instanceX - center.x) * ticks_since_start) * pow(300 / (distFromCenter / maxdistFromCenter), 1.1);
-////        newPos.y += sin(sign(instanceY - center.y) * ticks_since_start) * pow(500 / (distFromCenter / maxdistFromCenter), 1.1);
-////        newPos.z += sin(sign(instanceZ - center.z) * ticks_since_start) * pow(300 / (distFromCenter / maxdistFromCenter), 1.1);
-//        newPos.x += sign(newPos.x) * sin(ticks_since_start) * boomStrength * 20;
-//        newPos.y += sign(newPos.y) * sin(ticks_since_start) * boomStrength * 20;
-//        newPos.z += sign(newPos.z) * sin(ticks_since_start) * boomStrength * 20;
-//    }
 
 //	float boomPropagation = 100;
 //
