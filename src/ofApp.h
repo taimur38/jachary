@@ -40,11 +40,13 @@ class ofApp : public ofBaseApp{
 
 		// controlled vars
 
+		bool colorMode = false;
 		int boomTick = -1;
 		int boomDuration = 100;
 		int boomStrength = 20;
 
 		int count = 20000;
+		int texIndex = 0;
 		int activeColorIndex = 0;
 		int activeMeshIndex = 0;
 		float yScaleMod = 1.6;

@@ -9,6 +9,7 @@ uniform float timeValue;
 uniform float waveTime;
 uniform int waveDuration;
 
+uniform int colorMode;
 uniform vec4 color1;
 uniform vec4 color2;
 uniform int ticks;
@@ -61,9 +62,9 @@ void main()
     
     float perc_z = float(instanceZ) / float(maxZ);
     float ticks_so_far = ticks - waveTime;
-    float ticks_since_start = (ticks_so_far - float(perc_z * float(waveDuration))) / 5;
+    float ticks_since_start = (ticks_so_far - float((1-perc_z) * float(waveDuration))) / 5;
     if(ticks_since_start > 0 && ticks_since_start < 3.14 && waveTime > 0)
-        newPos.x += sin(ticks_since_start) * 300;
+        newPos.x += sin(ticks_since_start) * 30;
     //newPos.x += sin(instanceZ / 100.0 + (timeValue - waveTime) * 2) * 100;
     
     

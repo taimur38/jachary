@@ -19,7 +19,7 @@ void ofApp::setup() {
 
 	sp.setRadius(init_radius);
 	bp.set(init_radius);
-	cp.set(float(init_radius), float(init_radius));
+	cp.set(float(init_radius)/3.0, float(init_radius));
 	coneP.set(init_radius, float(init_radius));
 
 	//meshes.push_back(sp.getMesh());
@@ -27,7 +27,7 @@ void ofApp::setup() {
 	meshes.push_back(cp.getMesh());
 	meshes.push_back(coneP.getMesh());
 
-	dat_mesh = sp.getMesh();
+	dat_mesh = bp.getMesh();
 	
 	dat_texes.push_back(*new ofImage());
     dat_texes.push_back(*new ofImage());
@@ -54,22 +54,32 @@ void ofApp::setup() {
 		ofLog(OF_LOG_VERBOSE, "" + payload);
 
 		if (payload.compare("1") == 0) {
-			activeColorIndex = 1;
+			texIndex = 0;
+			colorMode = false;
 		}
 		else if (payload.compare("2") == 0) {
-			activeColorIndex = 2;
+			texIndex = 1;
+			colorMode = false;
 		}
 		else if (payload.compare("3") == 0) {
-			activeColorIndex = 3;
+			texIndex = 2;
+			colorMode = false;
 		}
 		else if (payload.compare("4") == 0) {
-			activeColorIndex = 4;
+			activeColorIndex = 0;
+			colorMode = true;
 		}
 		else if (payload.compare("5") == 0) {
-			activeColorIndex = 5;
+			activeColorIndex = 1;
+			colorMode = true;
 		}
 		else if (payload.compare("6") == 0) {
-			activeColorIndex = 6;
+			activeColorIndex = 2;
+			colorMode = true;
+		}
+		else if (payload.compare("7") == 0) {
+			activeColorIndex = 3;
+			colorMode = true;
 		}
 		else if (payload.compare("Boom") == 0) {
 			boomTick = ticks;
@@ -85,6 +95,28 @@ void ofApp::setup() {
 		}
 		else if (payload.compare("Cone") == 0) {
 			dat_mesh = coneP.getMesh();
+		}
+		else if (payload.compare("Up") == 0) {
+			ySpacing++;
+		}
+		else if (payload.compare("Down") == 0) {
+			if (ySpacing > 0)
+				ySpacing--;
+			
+		}
+		else if (payload.compare("Left") == 0) {
+			if (xSpacing > 0)
+				xSpacing--;
+		}
+		else if (payload.compare("Right") == 0) {
+			xSpacing++;
+		}
+		else if (payload.compare("Slower") == 0) {
+				speedMod += 50;
+		}
+		else if (payload.compare("Faster") == 0) {
+			if (speedMod > 50)
+				speedMod -= 50;
 		}
 
 	};
@@ -124,7 +156,7 @@ void ofApp::setup() {
 //--------------------------------------------------------------
 void ofApp::update() {
 
-	modded_ticks = (modded_ticks + 1.0 / speedMod);
+	modded_ticks = (modded_ticks + 1.0 / (speedMod + 1));
 	ticks++;
 
 	/*
@@ -172,11 +204,12 @@ void ofApp::draw() {
     glEnable(GL_TEXTURE_2D);
 
 	shaderProg.setUniform1i("count", count);
+	shaderProg.setUniform1i("colorMode", colorMode ? 1 : 0);
 	shaderProg.setUniform4f("color1", colorsVec[activeColorIndex % num_colors]);
 	shaderProg.setUniform4f("color2", colorsVec[(activeColorIndex+1) % num_colors]);
 	shaderProg.setUniform1i("ticks", ticks);
 	shaderProg.setUniform1i("perturbation", perturbation);
-	shaderProg.setUniformTexture("tex0", dat_texes[activeColorIndex % 3].getTexture(), 0);
+	shaderProg.setUniformTexture("tex0", dat_texes[texIndex % 3].getTexture(), 0);
 	shaderProg.setUniform1i("xSpacing", xSpacing);
 	shaderProg.setUniform1i("ySpacing", ySpacing);
 	shaderProg.setUniform1i("boomTick", boomTick);
