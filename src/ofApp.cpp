@@ -225,7 +225,7 @@ void ofApp::draw() {
 	shaderProg.setUniform1i("xSpacing", xSpacing);
 	shaderProg.setUniform1i("ySpacing", ySpacing);
 	shaderProg.setUniform1i("boomTick", boomTick);
-	shaderProg.setUniform1i("boomOn", boomOn % 2);
+	shaderProg.setUniform1i("boomOn", boomOn);
 	shaderProg.setUniform1i("boomDuration", boomDuration);
 	shaderProg.setUniform1i("boomStrength", boomStrength);
     shaderProg.setUniform1f("timeValue", ofGetElapsedTimef());
