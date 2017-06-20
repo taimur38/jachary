@@ -29,9 +29,9 @@ void ofApp::setup() {
 
 	dat_mesh = bp.getMesh();
 	
-	dat_texes.push_back(*new ofImage());
-    dat_texes.push_back(*new ofImage());
-    dat_texes.push_back(*new ofImage());
+	dat_texes.push_back(ofImage());
+    dat_texes.push_back(ofImage());
+    dat_texes.push_back(ofImage());
     
     dat_texes[0].load("jachary_blue.jpg");
     dat_texes[1].load("jachary_purple.jpg");
@@ -231,7 +231,6 @@ void ofApp::draw() {
     shaderProg.setUniform1f("timeValue", ofGetElapsedTimef());
     shaderProg.setUniform1f("waveTime", waveTime);
     shaderProg.setUniform1i("waveDuration", waveDuration);
-
 
 	dat_mesh.drawInstanced(OF_MESH_FILL, count);
 
