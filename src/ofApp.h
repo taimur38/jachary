@@ -31,6 +31,8 @@ class ofApp : public ofBaseApp{
 		float modded_ticks = 0;
 		int init_radius = 20;
 
+		int boomOn = 0;
+
 		ofShader shaderProg;
 		ofVboMesh dat_mesh;
         vector<ofImage> dat_texes;

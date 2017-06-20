@@ -22,6 +22,8 @@ uniform int boomTick;
 uniform int boomDuration;
 uniform int boomStrength;
 
+uniform int boomOn;
+
 uniform int count;
 
 in vec4 position;
@@ -73,10 +75,14 @@ void main()
     float maxdistFromCenter = sqrt(pow(maxX - center.x, 2) + pow(maxY - center.y, 2) + pow(maxZ - center.z, 2));
     ticks_so_far = ticks - boomTick;
     ticks_since_start = (ticks_so_far - float(distFromCenter/float(maxdistFromCenter) * float(boomDuration))) / 20;
-    if(boomTick > 0 && ticks_since_start > 0 && ticks_since_start < 3.14 * 2) {
-        newPos.x += sin(instanceX - center.x + ticks_since_start) * 50;
-        newPos.y += sin(instanceY - center.y + ticks_since_start) * 50;
-        newPos.z += sin(instanceZ - center.z + ticks_since_start) * 50;
+    if(boomOn == 1) {
+        //newPos.x += sin(instanceX - center.x + ticks_since_start) * 50;
+        //newPos.y += sin(instanceY - center.y + ticks_since_start) * 50;
+        //newPos.z += sin(instanceZ - center.z + ticks_since_start) * 50;
+
+        newPos.x += sin(instanceX - center.x) * 50;
+        newPos.y += sin(instanceY - center.y) * 50;
+        newPos.z += sin(instanceZ - center.z) * 50;
     }
     
 //    float distFromCenter = sqrt(pow(instanceX - center.x, 2) + pow(instanceY - center.y, 2) + pow(instanceZ - center.z, 2));

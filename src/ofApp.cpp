@@ -6,7 +6,7 @@ void ofApp::setup() {
 	// create grid
 
 	//ofSetWindowShape(1920 * 4, 1080);
-	//ofSetFullscreen(true);
+	ofSetFullscreen(true);
 	ofBackground(0);
 	light.setDiffuseColor(ofFloatColor(0.85, 0.85, 0.85));
 	ofEnableDepthTest();
@@ -83,6 +83,7 @@ void ofApp::setup() {
 		}
 		else if (payload.compare("Boom") == 0) {
 			boomTick = ticks;
+			boomOn++;
 		}
 		else if (payload.compare("Wave") == 0) {
 			waveTime = ticks;
@@ -117,6 +118,17 @@ void ofApp::setup() {
 		else if (payload.compare("Faster") == 0) {
 			if (speedMod > 50)
 				speedMod -= 50;
+		}
+		else if (payload.compare("Reset") == 0) {
+			xSpacing = 4;
+			ySpacing = 3;
+			speedMod = 300;
+			texIndex = 0;
+			colorMode = false;
+		}
+		else if (payload.compare("Flatten") == 0) {
+			ySpacing = 0;
+			xSpacing = 1;
 		}
 
 	};
@@ -171,9 +183,9 @@ void ofApp::update() {
 	*/
 
 	cam.setPosition(ofVec3f(
-		sin(modded_ticks * xScaleMod) * (1080/4),
-		cos(modded_ticks * yScaleMod) * (1920/4),
-		(sin(modded_ticks * zScaleMod) + 1)/2 * 1500 + 300 
+		sin(modded_ticks * xScaleMod) * (1080/2),
+		cos(modded_ticks * yScaleMod) * (1920/2),
+		(sin(modded_ticks * zScaleMod) + 1)/2 * 1500 + 300
 	));
 
 	/*dat_mesh = meshes.at(activeMeshIndex % meshes.size());*/
@@ -181,7 +193,7 @@ void ofApp::update() {
 	cam.lookAt(ofVec3f(
 		sin(modded_ticks),
 		cos(modded_ticks),
-		sin(modded_ticks)
+		sin(modded_ticks * 2)
 	));
 
 
@@ -213,6 +225,7 @@ void ofApp::draw() {
 	shaderProg.setUniform1i("xSpacing", xSpacing);
 	shaderProg.setUniform1i("ySpacing", ySpacing);
 	shaderProg.setUniform1i("boomTick", boomTick);
+	shaderProg.setUniform1i("boomOn", boomOn % 2);
 	shaderProg.setUniform1i("boomDuration", boomDuration);
 	shaderProg.setUniform1i("boomStrength", boomStrength);
     shaderProg.setUniform1f("timeValue", ofGetElapsedTimef());
