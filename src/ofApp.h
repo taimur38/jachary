@@ -42,7 +42,7 @@ class ofApp : public ofBaseApp{
 
 		// controlled vars
 
-		bool colorMode = false;
+		bool colorMode = true;
 		int boomTick = -1;
 		int boomDuration = 100;
 		int boomStrength = 20;
@@ -80,6 +80,7 @@ class ofApp : public ofBaseApp{
 #define num_colors 10
 
 		ofVec4f colorsVec[num_colors] = {
+			ofVec4f(108/255.0, 25.0/255.0, 205.0/255.0, 1.0),		// purple
 			ofVec4f(216.0/255.0, 126.0/255.0, 66.0/255.0, 1.0),		// orange
 			ofVec4f(236.0/255.0, 92.0/255.0, 68.0/255.0, 1.0),		// red
 			ofVec4f(70.0/255.0, 134.0/255.0, 198.0/255.0, 1.0),		// light blue
