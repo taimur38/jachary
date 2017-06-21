@@ -81,6 +81,14 @@ void ofApp::setup() {
 			activeColorIndex = 3;
 			colorMode = true;
 		}
+		else if (payload.compare("8") == 0) {
+			activeColorIndex = 4;
+			colorMode = true;
+		}
+		else if (payload.compare("9") == 0) {
+			activeColorIndex = 5;
+			colorMode = true;
+		}
 		else if (payload.compare("Boom") == 0) {
 			boomTick = ticks;
 			boomOn++;
@@ -191,10 +199,15 @@ void ofApp::update() {
 
 	/*dat_mesh = meshes.at(activeMeshIndex % meshes.size());*/
 
+	/*
 	cam.lookAt(ofVec3f(
 		sin(modded_ticks),
 		cos(modded_ticks),
 		sin(modded_ticks * 2)
+	));
+	*/
+	cam.lookAt(ofVec3f(
+		0, 0, 0
 	));
 
 
