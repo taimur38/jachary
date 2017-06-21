@@ -6,7 +6,7 @@ void ofApp::setup() {
 	// create grid
 
 	//ofSetWindowShape(1920 * 4, 1080);
-	ofSetFullscreen(true);
+	//ofSetFullscreen(true);
 	ofBackground(0);
 	light.setDiffuseColor(ofFloatColor(0.85, 0.85, 0.85));
 	ofEnableDepthTest();
@@ -87,6 +87,7 @@ void ofApp::setup() {
 		}
 		else if (payload.compare("Wave") == 0) {
 			waveTime = ticks;
+			waveOn++;
 		}
 		else if (payload.compare("Cube") == 0) {
 			dat_mesh = bp.getMesh();
@@ -225,7 +226,8 @@ void ofApp::draw() {
 	shaderProg.setUniform1i("xSpacing", xSpacing);
 	shaderProg.setUniform1i("ySpacing", ySpacing);
 	shaderProg.setUniform1i("boomTick", boomTick);
-	shaderProg.setUniform1i("boomOn", boomOn);
+	shaderProg.setUniform1i("boomOn", boomOn % 2);
+	shaderProg.setUniform1i("waveOn", waveOn % 2);
 	shaderProg.setUniform1i("boomDuration", boomDuration);
 	shaderProg.setUniform1i("boomStrength", boomStrength);
     shaderProg.setUniform1f("timeValue", ofGetElapsedTimef());

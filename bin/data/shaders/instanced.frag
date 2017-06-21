@@ -11,7 +11,7 @@ out vec4 fragColor;
 void main()
 {
 	if(colorMode == 0) {
-		fragColor = texture(tex0, texCoordVarying * 1080);
+		fragColor = texture(tex0, 1080 - texCoordVarying * 1080);
 	}
 	else {
 		fragColor = colorVarying;

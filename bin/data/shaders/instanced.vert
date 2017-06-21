@@ -8,6 +8,7 @@ uniform sampler2DRect tex0;
 uniform float timeValue;
 uniform float waveTime;
 uniform int waveDuration;
+uniform int waveOn;
 
 uniform int colorMode;
 uniform vec4 color1;
@@ -65,8 +66,16 @@ void main()
     float perc_z = float(instanceZ) / float(maxZ);
     float ticks_so_far = ticks - waveTime;
     float ticks_since_start = (ticks_so_far - float((1-perc_z) * float(waveDuration))) / 5;
-    if(ticks_since_start > 0 && ticks_since_start < 3.14 && waveTime > 0)
+
+	/*
+    if(ticks_since_start > 0 && ticks_since_start < 3.14 && waveTime > 0) {
+	}
+	*/
+
+	if(waveOn == 1) {
         newPos.x += sin(ticks_since_start) * 30;
+	}
+	
     //newPos.x += sin(instanceZ / 100.0 + (timeValue - waveTime) * 2) * 100;
     
     
@@ -79,7 +88,6 @@ void main()
         newPos.x += sin(instanceX - center.x + ticks_since_start) * 50;
         newPos.y += sin(instanceY - center.y + ticks_since_start) * 50;
         newPos.z += sin(instanceZ - center.z + ticks_since_start) * 50;
-
     }
     
 //    float distFromCenter = sqrt(pow(instanceX - center.x, 2) + pow(instanceY - center.y, 2) + pow(instanceZ - center.z, 2));

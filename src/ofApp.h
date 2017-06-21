@@ -32,6 +32,7 @@ class ofApp : public ofBaseApp{
 		int init_radius = 20;
 
 		int boomOn = 0;
+		int waveOn = 0;
 
 		ofShader shaderProg;
 		ofVboMesh dat_mesh;
